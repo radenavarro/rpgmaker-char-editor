@@ -1,0 +1,15 @@
+#optionContainer{
+    width: 50vw;
+    border: 1px solid black;
+    border-radius: 1em;
+    padding: 1em;
+    box-sizing: border-box;
+    margin: 0 auto;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+}
+
+#options i:hover{
+    cursor: pointer;
+}
