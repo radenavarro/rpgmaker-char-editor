@@ -13,3 +13,8 @@
 #options i:hover{
     cursor: pointer;
 }
+
+Canvas{
+    width: 145px;
+    height: 145px;
+}

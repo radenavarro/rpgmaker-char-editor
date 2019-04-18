@@ -203,7 +203,7 @@ class OptionContainer extends Component {
                     <i onClick={this.nextOption.bind(this, 'complements')}>&gt;</i>
                     <br/>
                 </div>
-                <Canvas/>
+                <Canvas character={this.state.character}/>
             </div>
         );
     }
