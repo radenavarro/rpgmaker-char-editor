@@ -20,19 +20,6 @@ class OptionContainer extends Component {
             complements: 1
         }
     };
-    constructor(...props){
-        super(...props);
-    }
-    // handleCharacter(){
-    //     // let newStateVal = (oldStateVal + 1);
-    //     this.setState(
-    //         prevState =>({
-    //             character : {
-    //                 bodyType : prevState.character.bodyType
-    //             }
-    //         })
-    //     )
-    // }
 
     nextOption(option){
         let character = Object.assign({}, this.state.character);
