@@ -17,10 +17,23 @@ class Canvas extends Component {
 
     updateCanvas() {
         const ctx = this.refs.canvas.getContext('2d');
+        this.attributeDelimiter();
         //Display head
         this.displayHead(ctx);
         //Display body
         this.displayBody(ctx);
+        //Display eyes
+        this.displayEyes(ctx);
+        //Display nose
+        this.displayNose(ctx);
+        //Display mouth
+        this.displayMouth(ctx);
+        //Display facial hair
+        this.displayFacial(ctx);
+    }
+
+    attributeDelimiter(){
+        // TODO: Limit graphics to those gathered from the database
     }
 
     displayHead(ctx){
