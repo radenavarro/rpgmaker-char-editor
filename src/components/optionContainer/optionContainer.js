@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './optionContainer.css';
 import Canvas from "../canvas/canvas";
+import html2canvas from 'html2canvas';
+import fileSaver from 'file-saver';
 
 class OptionContainer extends Component {
     state = {
@@ -21,6 +23,14 @@ class OptionContainer extends Component {
             complements: 1
         }
     };
+
+    saveCharacter(){
+        html2canvas(document.querySelector("#canvas")).then((canvas) => {
+            canvas.toBlob((blob) => {
+                fileSaver.saveAs(blob, "generatedCharacter.png");
+            });
+        });
+    }
 
     nextOption(option){
         let character = Object.assign({}, this.state.character);
@@ -196,6 +206,8 @@ class OptionContainer extends Component {
                     <i onClick={this.previousOption.bind(this, 'complements')}>&lt;</i>
                     <i onClick={this.nextOption.bind(this, 'complements')}>&gt;</i>
                     <br/>
+
+                    <button onClick={this.saveCharacter}>Guardar</button>
                 </div>
                 <Canvas character={this.state.character}/>
             </div>
