@@ -1,3 +1,15 @@
-canvas{
+#canvas{
+    position: relative;
+    width: 144px;
+    height: 144px;
     border: 1px solid black;
+    overflow: hidden;
+}
+
+#canvas>div{
+    position: absolute;
+    width: inherit;
+    height: inherit;
+    background-size: 260px 260px;
+    background-position: -72px -20px;
 }
