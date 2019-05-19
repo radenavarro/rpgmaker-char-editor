@@ -14,6 +14,7 @@ class OptionContainer extends Component {
             eyebrowsColor: 1,
             eyes: 1,
             nose: 1,
+            ears: 1,
             mouth: 1,
             facial: 1,
             clothes: 1,
@@ -51,6 +52,9 @@ class OptionContainer extends Component {
                 break;
             case 'nose':
                 character.nose++;
+                break;
+            case 'ears':
+                character.ears++;
                 break;
             case 'mouth':
                 character.mouth++;
@@ -101,6 +105,9 @@ class OptionContainer extends Component {
                 break;
             case 'nose':
                 character.nose--;
+                break;
+            case 'ears':
+                character.ears--;
                 break;
             case 'mouth':
                 character.mouth--;

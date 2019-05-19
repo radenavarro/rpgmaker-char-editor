@@ -26,10 +26,14 @@ class Canvas extends Component {
         this.displayEyes(ctx);
         //Display nose
         this.displayNose(ctx);
+        // Display ears
+        this.displayEars(ctx);
         //Display mouth
         this.displayMouth(ctx);
         //Display facial hair
         this.displayFacial(ctx);
+        // Display hair
+        this.displayHair(ctx);
     }
 
     attributeDelimiter(){
@@ -123,6 +127,14 @@ class Canvas extends Component {
         facial_image.src = this.imageUrl + "facial" + this.props.character.facial + ".png";
         facial_image.onload = () => {
             ctx.drawImage(facial_image, -56, -24, 225, 225);
+        }
+    }
+
+    displayEars(ctx){
+        let ears_image = new Image();
+        ears_image.src = this.imageUrl + "head" + this.props.character.ears + ".png";
+        ears_image.onload = () => {
+            ctx.drawImage(ears_image, -56, -24, 225, 225);
         }
     }
 
