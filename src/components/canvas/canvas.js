@@ -52,11 +52,11 @@ class Canvas extends Component {
             },
             ears : {
                 backgroundImage : `url("${this.imageUrl}ears${this.props.character.ears}.png")`,
-                zIndex: 8
+                zIndex: 12
             },
             clothes : {
                 backgroundImage : `url("${this.imageUrl}clothes${this.props.character.clothes}.png")`,
-                zIndex: 11
+                zIndex: 20
             },
             mouth : {
                 backgroundImage : `url("${this.imageUrl}mouth${this.props.character.mouth}.png")`,
@@ -64,10 +64,10 @@ class Canvas extends Component {
             },
             complements : {
                 backgroundImage : `url("${this.imageUrl}complements${this.props.character.complements}.png")`,
-                zIndex: 20
+                zIndex: 40
             }
         }
-        console.log(styles.body);
+        console.log(styles.head);
         return (
             <div id={"canvas"}>
                 <div id={"head"} style={styles.head}></div>

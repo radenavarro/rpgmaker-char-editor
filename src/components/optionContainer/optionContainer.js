@@ -5,6 +5,11 @@ import html2canvas from 'html2canvas';
 import fileSaver from 'file-saver';
 
 class OptionContainer extends Component {
+    constructor(...props){
+        super(...props);
+        this.imageUrl = 'img/';
+        this.imgExtension = '.png';
+    }
     state = {
         character : {
             skin : 1,
@@ -24,15 +29,18 @@ class OptionContainer extends Component {
         }
     };
 
+    /**
+     * Method that saves a character, with transparent background
+     */
     saveCharacter(){
-        html2canvas(document.querySelector("#canvas")).then((canvas) => {
+        html2canvas(document.querySelector("#canvas"), {backgroundColor:null}).then((canvas) => {
             canvas.toBlob((blob) => {
                 fileSaver.saveAs(blob, "generatedCharacter.png");
             });
         });
     }
 
-    nextOption(option){
+    async nextOption(option){
         let character = Object.assign({}, this.state.character);
         // console.log(charObj);
         switch (option) {
@@ -43,7 +51,14 @@ class OptionContainer extends Component {
                 character.skin++;
                 break;
             case 'head':
-                character.head++;
+                await fetch(this.imageUrl + "head" + character.head + this.imgExtension, { method: 'HEAD' })
+                .then(res => {
+                    if (res.ok) {
+                        character.head++;
+                    } else {
+                        character.head = 1;
+                    }
+                }).catch(err => console.log('Error:', err));
                 break;
             case 'hair':
                 character.hair++;
@@ -142,70 +157,118 @@ class OptionContainer extends Component {
         return (
             <div id="optionContainer">
                 <div id="options">
-                    <span>Piel</span>
-                    <i onClick={this.previousOption.bind(this, 'skin')}>&lt;</i>
-                    <i onClick={this.nextOption.bind(this, 'skin')}>&gt;</i>
-                    <br/>
 
-                    <span>Complexión</span>
-                    <i onClick={this.previousOption.bind(this, 'body')}>&lt;</i>
-                    <i onClick={this.nextOption.bind(this, 'body')}>&gt;</i>
-                    <br/>
+                    <div className="subOption">
+                        <span>Piel</span>
+                        <div className="controls">
+                            <i className="fas fa-angle-left" onClick={this.previousOption.bind(this, 'skin')}></i>
+                            <i className="fas fa-angle-right" onClick={this.nextOption.bind(this, 'skin')}></i>
+                        </div>
+                    </div>
 
-                    <span>Cabeza</span>
-                    <i onClick={this.previousOption.bind(this, 'head')}>&lt;</i>
-                    <i onClick={this.nextOption.bind(this, 'head')}>&gt;</i>
-                    <br/>
+                    <div className="subOption">
+                        <span>Complexión</span>
+                        <div className="controls">
+                            <i className="fas fa-angle-left" onClick={this.previousOption.bind(this, 'body')}></i>
+                            <i className="fas fa-angle-right" onClick={this.nextOption.bind(this, 'body')}></i>
+                        </div>    
+                    </div>
 
-                    <span>Pelo</span>
-                    <i onClick={this.previousOption.bind(this, 'hair')}>&lt;</i>
-                    <i onClick={this.nextOption.bind(this, 'hair')}>&gt;</i>
-                    <br/>
+                    <div className="subOption">
+                        <span>Cabeza</span>
+                        <div className="controls">
+                            <i className="fas fa-angle-left" onClick={this.previousOption.bind(this, 'head')}></i>
+                            <i className="fas fa-angle-right" onClick={this.nextOption.bind(this, 'head')}></i>
+                        </div>
+                    </div>
 
-                    <span>Color de pelo</span>
-                    <i onClick={this.previousOption.bind(this, 'hairColor')}>&lt;</i>
-                    <i onClick={this.nextOption.bind(this, 'hairColor')}>&gt;</i>
-                    <br/>
+                    <div className="subOption">
+                        <span>Pelo</span>
+                        <div className="controls">
+                            <i className="fas fa-angle-left" onClick={this.previousOption.bind(this, 'hair')}></i>
+                            <i className="fas fa-angle-right" onClick={this.nextOption.bind(this, 'hair')}></i>
+                        </div>
+                    </div>
 
-                    <span>Cejas</span>
-                    <i onClick={this.previousOption.bind(this, 'eyebrows')}>&lt;</i>
-                    <i onClick={this.nextOption.bind(this, 'eyebrows')}>&gt;</i>
-                    <br/>
+                    <div className="subOption">
+                        <span>Color de pelo</span>
+                        <div className="controls">
+                            <i className="fas fa-angle-left" onClick={this.previousOption.bind(this, 'hairColor')}></i>
+                            <i className="fas fa-angle-right" onClick={this.nextOption.bind(this, 'hairColor')}></i>
+                        </div>
+                    </div>
 
-                    <span>Color de cejas</span>
-                    <i onClick={this.previousOption.bind(this, 'eyebrowsColor')}>&lt;</i>
-                    <i onClick={this.nextOption.bind(this, 'eyebrowsColor')}>&gt;</i>
-                    <br/>
+                    <div className="subOption">
+                        <span>Cejas</span>
+                        <div className="controls">
+                            <i className="fas fa-angle-left" onClick={this.previousOption.bind(this, 'eyebrows')}></i>
+                            <i className="fas fa-angle-right" onClick={this.nextOption.bind(this, 'eyebrows')}></i>
+                        </div>
+                    </div>
 
-                    <span>Ojos</span>
-                    <i onClick={this.previousOption.bind(this, 'eyes')}>&lt;</i>
-                    <i onClick={this.nextOption.bind(this, 'eyes')}>&gt;</i>
-                    <br/>
+                    <div className="subOption">
+                        <span>Color de cejas</span>
+                        <div className="controls">
+                            <i className="fas fa-angle-left" onClick={this.previousOption.bind(this, 'eyebrowsColor')}></i>
+                            <i className="fas fa-angle-right" onClick={this.nextOption.bind(this, 'eyebrowsColor')}></i>
+                        </div>
+                    </div>
 
-                    <span>Nariz</span>
-                    <i onClick={this.previousOption.bind(this, 'nose')}>&lt;</i>
-                    <i onClick={this.nextOption.bind(this, 'nose')}>&gt;</i>
-                    <br/>
+                    <div className="subOption">
+                        <span>Ojos</span>
+                        <div className="controls">
+                            <i className="fas fa-angle-left" onClick={this.previousOption.bind(this, 'eyes')}></i>
+                            <i className="fas fa-angle-right" onClick={this.nextOption.bind(this, 'eyes')}></i>
+                        </div>
+                    </div>
 
-                    <span>Boca</span>
-                    <i onClick={this.previousOption.bind(this, 'mouth')}>&lt;</i>
-                    <i onClick={this.nextOption.bind(this, 'mouth')}>&gt;</i>
-                    <br/>
+                    <div className="subOption">
+                        <span>Nariz</span>
+                        <div className="controls">
+                            <i className="fas fa-angle-left" onClick={this.previousOption.bind(this, 'nose')}></i>
+                            <i className="fas fa-angle-right" onClick={this.nextOption.bind(this, 'nose')}></i>
+                        </div>
+                    </div>
 
-                    <span>Vello facial</span>
-                    <i onClick={this.previousOption.bind(this, 'facial')}>&lt;</i>
-                    <i onClick={this.nextOption.bind(this, 'facial')}>&gt;</i>
-                    <br/>
+                    <div className="subOption">
+                        <span>Boca</span>
+                        <div className="controls">
+                            <i className="fas fa-angle-left" onClick={this.previousOption.bind(this, 'mouth')}></i>
+                            <i className="fas fa-angle-right" onClick={this.nextOption.bind(this, 'mouth')}></i>
+                        </div>
+                    </div>
 
-                    <span>Vestimenta</span>
-                    <i onClick={this.previousOption.bind(this, 'clothes')}>&lt;</i>
-                    <i onClick={this.nextOption.bind(this, 'clothes')}>&gt;</i>
-                    <br/>
+                    <div className="subOption">
+                        <span>Orejas</span>
+                        <div className="controls">
+                            <i className="fas fa-angle-left" onClick={this.previousOption.bind(this, 'ears')}></i>
+                            <i className="fas fa-angle-right" onClick={this.nextOption.bind(this, 'ears')}></i>
+                        </div>
+                    </div>
 
-                    <span>Complementos</span>
-                    <i onClick={this.previousOption.bind(this, 'complements')}>&lt;</i>
-                    <i onClick={this.nextOption.bind(this, 'complements')}>&gt;</i>
-                    <br/>
+                    <div className="subOption">
+                        <span>Vello facial</span>
+                        <div className="controls">
+                            <i className="fas fa-angle-left" onClick={this.previousOption.bind(this, 'facial')}></i>
+                            <i className="fas fa-angle-right" onClick={this.nextOption.bind(this, 'facial')}></i>
+                        </div>
+                    </div>
+
+                    <div className="subOption">
+                        <span>Vestimenta</span>
+                        <div className="controls">
+                            <i className="fas fa-angle-left" onClick={this.previousOption.bind(this, 'clothes')}></i>
+                            <i className="fas fa-angle-right" onClick={this.nextOption.bind(this, 'clothes')}></i>
+                        </div>
+                    </div>
+
+                    <div className="subOption">
+                        <span>Complementos</span>
+                        <div className="controls">
+                            <i className="fas fa-angle-left" onClick={this.previousOption.bind(this, 'complements')}></i>
+                            <i className="fas fa-angle-right" onClick={this.nextOption.bind(this, 'complements')}></i>
+                        </div>
+                    </div>
 
                     <button onClick={this.saveCharacter}>Guardar</button>
                 </div>

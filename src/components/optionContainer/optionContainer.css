@@ -10,11 +10,45 @@
     justify-content: center;
 }
 
+#options{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    flex-grow: 2;
+}
+
 #options i:hover{
     cursor: pointer;
+}
+
+#options .subOption{
+    flex: 0 1 auto;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+}
+
+.subOption>*{
+    /* border: 1px solid black; */
+    background-color: rgb(235, 240, 171);
+}
+
+.subOption>span{
+    flex: 0 1 300px;
 }
 
 Canvas{
     width: 145px;
     height: 145px;
+}
+
+.controls i{
+    background-color: white;
+    padding: 0.4em;
+    border: 1px solid black;
+    box-sizing: border-box;
+}
+
+i:hover{
+    background-color: rgb(238, 255, 6);
 }
