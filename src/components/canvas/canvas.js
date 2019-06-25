@@ -67,7 +67,7 @@ class Canvas extends Component {
                 zIndex: 40
             }
         }
-        console.log(styles.head);
+        // console.log(styles.head);
         return (
             <div id={"canvas"}>
                 <div id={"head"} style={styles.head}></div>

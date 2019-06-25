@@ -3,6 +3,8 @@ import './optionContainer.css';
 import Canvas from "../canvas/canvas";
 import html2canvas from 'html2canvas';
 import fileSaver from 'file-saver';
+import {connect} from "react-redux";
+import charService from '../../services/charService';
 
 class OptionContainer extends Component {
     constructor(...props){
@@ -10,24 +12,40 @@ class OptionContainer extends Component {
         this.imageUrl = 'img/';
         this.imgExtension = '.png';
     }
-    state = {
-        character : {
-            skin : 1,
-            body: 1,
-            head: 1,
-            hair: 1,
-            hairColor: 1,
-            eyebrows: 1,
-            eyebrowsColor: 1,
-            eyes: 1,
-            nose: 1,
-            ears: 1,
-            mouth: 1,
-            facial: 1,
-            clothes: 1,
-            complements: 1
+
+    async componentWillMount(){
+        if (!this.props.character){
+            let char = new charService();
+            this.charObj = await char.getCharConfig();
+            console.log(this.charObj.character)
+
+            this.character = {
+                default : {
+                skin : 1,
+                body: 1,
+                head: 1,
+                hair: 1,
+                hairColor: 1,
+                eyebrows: 1,
+                eyebrowsColor: 1,
+                eyes: 1,
+                nose: 1,
+                ears: 1,
+                mouth: 1,
+                facial: 1,
+                clothes: 1,
+                complements: 1
+                }
+            }   
+            this.props.dispatch({
+                type: "LOAD_DEFAULT_CHARACTER",
+                // data: Object.assign({}, this.character.default)
+                data: Object.assign({}, this.character.default)
+    
+            })
         }
-    };
+        // let charObj = await fetch('localhost:3001/')
+    }
 
     /**
      * Method that saves a character, with transparent background
@@ -41,8 +59,9 @@ class OptionContainer extends Component {
     }
 
     async nextOption(option){
-        let character = Object.assign({}, this.state.character);
-        // console.log(charObj);
+        let character = Object.assign({}, this.props.character);
+        console.log(character);
+
         switch (option) {
             case 'body':
                 character.body++;
@@ -53,6 +72,7 @@ class OptionContainer extends Component {
             case 'head':
                 await fetch(this.imageUrl + "head" + character.head + this.imgExtension, { method: 'HEAD' })
                 .then(res => {
+                    console.log(res)
                     if (res.ok) {
                         character.head++;
                     } else {
@@ -94,14 +114,14 @@ class OptionContainer extends Component {
                 character.complements++;
                 break;
         }
-        this.setState(
-            () =>({
-                character
-            })
-        );
+
+        this.props.dispatch({
+            type: "UPDATE_CHARACTER",
+            data: character
+        })
     }
     previousOption(option){
-        let character = Object.assign({}, this.state.character);
+        let character = Object.assign({}, this.props.character);
         // console.log(charObj);
         switch (option) {
             case 'body':
@@ -147,13 +167,16 @@ class OptionContainer extends Component {
                 character.complements--;
                 break;
         }
-        this.setState(
-            () =>({
-                character
-            })
-        );
+        // this.setState(
+        //     () =>({
+        //         character
+        //     })
+        // );
     }
     render() {
+        console.log("PROPS en render")
+        console.log(this.props.character)
+        
         return (
             <div id="optionContainer">
                 <div id="options">
@@ -272,10 +295,18 @@ class OptionContainer extends Component {
 
                     <button onClick={this.saveCharacter}>Guardar</button>
                 </div>
-                <Canvas character={this.state.character}/>
+                {this.character ? <Canvas character={this.props.character ? this.props.character : this.character.default} /> : ""}
             </div>
         );
     }
 }
 
-export default OptionContainer;
+const mapStateToProps = (state) => {
+    // console.log("State to props")
+    // console.log(state.character)
+    return{
+        character: state.character
+    }
+};
+
+export default connect(mapStateToProps)(OptionContainer);
