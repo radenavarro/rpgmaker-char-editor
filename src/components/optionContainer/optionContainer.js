@@ -17,34 +17,16 @@ class OptionContainer extends Component {
         if (!this.props.character){
             let char = new charService();
             this.charObj = await char.getCharConfig();
-            console.log(this.charObj.character)
+            // console.log(this.charObj.character)
 
-            this.character = {
-                default : {
-                skin : 1,
-                body: 1,
-                head: 1,
-                hair: 1,
-                hairColor: 1,
-                eyebrows: 1,
-                eyebrowsColor: 1,
-                eyes: 1,
-                nose: 1,
-                ears: 1,
-                mouth: 1,
-                facial: 1,
-                clothes: 1,
-                complements: 1
-                }
-            }   
+            this.character = this.buildDefaultCharObj();
+
             this.props.dispatch({
                 type: "LOAD_DEFAULT_CHARACTER",
-                // data: Object.assign({}, this.character.default)
-                data: Object.assign({}, this.character.default)
+                data: Object.assign({}, this.character)
     
             })
         }
-        // let charObj = await fetch('localhost:3001/')
     }
 
     /**
@@ -64,54 +46,61 @@ class OptionContainer extends Component {
 
         switch (option) {
             case 'body':
-                character.body++;
+                character.body.type++;
                 break;
             case 'skin':
-                character.skin++;
+                character.skin.type++;
                 break;
             case 'head':
-                await fetch(this.imageUrl + "head" + character.head + this.imgExtension, { method: 'HEAD' })
+                await fetch(this.imageUrl + "head" + character.head.type + this.imgExtension, { method: 'HEAD' })
                 .then(res => {
                     console.log(res)
                     if (res.ok) {
-                        character.head++;
+                        character.head.type++;
                     } else {
-                        character.head = 1;
+                        character.head.type = 1;
                     }
                 }).catch(err => console.log('Error:', err));
                 break;
             case 'hair':
-                character.hair++;
+                if(this.charObj){
+                    // Valida array hairs fuera de límite, para cada head
+                    if(character.hair.type <= Object.keys(this.charObj.character.heads[0][1].hairs[0]).length) {
+                        character.hair.type++;
+                        console.log("EN VENTANA " + character.hair.type);}
+                    else{character.hair.type = 1;
+                        console.log("LOOPBACK" + character.hair.type)}
+                }
                 break;
             case 'hairColor':
-                character.hairColor++;
+                character.hairColor.type++;
                 break;
             case 'eyebrows':
-                character.eyebrows++;
+                character.eyebrows.type++;
                 break;
             case 'eyebrowsColor':
-                character.eyebrowsColor++;
+                character.eyebrowsColor.type++;
                 break;
             case 'eyes':
-                character.eyes++;
+                character.eyes.type++;
                 break;
             case 'nose':
-                character.nose++;
+                character.nose.type++;
                 break;
             case 'ears':
-                character.ears++;
+                character.ears.type++;
                 break;
             case 'mouth':
-                character.mouth++;
+                character.mouth.type++;
                 break;
             case 'facial':
-                character.facial++;
+                character.facial.type++;
                 break;
             case 'clothes':
-                character.clothes++;
+                character.clothes.type++;
                 break;
             case 'complements':
-                character.complements++;
+                character.complements.type++;
                 break;
         }
 
@@ -125,53 +114,84 @@ class OptionContainer extends Component {
         // console.log(charObj);
         switch (option) {
             case 'body':
-                character.body--;
+                character.body.type--;
                 break;
             case 'skin':
-                character.skin--;
+                character.skin.type--;
                 break;
             case 'head':
-                character.head--;
+                character.head.type--;
                 break;
             case 'hair':
-                character.hair--;
+                if(this.charObj){
+                    // Valida array hairs fuera de límite, para cada head
+                    if(character.hair.type > 1) {
+                        console.log("EN VENTANA " + character.hair.type);
+                        character.hair.type--;
+                    }
+                    else{
+                        character.hair.type = ((Object.keys(this.charObj.character.heads[0][1].hairs[0]).length)+1)
+                        console.log("LOOPBACK" + character.hair.type)
+                    }
+                }
                 break;
             case 'hairColor':
-                character.hairColor--;
+                character.hairColor.type--;
                 break;
             case 'eyebrows':
-                character.eyebrows--;
+                character.eyebrows.type--;
                 break;
             case 'eyebrowsColor':
-                character.eyebrowsColor--;
+                character.eyebrowsColor.type--;
                 break;
             case 'eyes':
-                character.eyes--;
+                character.eyes.type--;
                 break;
             case 'nose':
-                character.nose--;
+                character.nose.type--;
                 break;
             case 'ears':
-                character.ears--;
+                character.ears.type--;
                 break;
             case 'mouth':
-                character.mouth--;
+                character.mouth.type--;
                 break;
             case 'facial':
-                character.facial--;
+                character.facial.type--;
                 break;
             case 'clothes':
-                character.clothes--;
+                character.clothes.type--;
                 break;
             case 'complements':
-                character.complements--;
+                character.complements.type--;
                 break;
         }
-        // this.setState(
-        //     () =>({
-        //         character
-        //     })
-        // );
+        this.props.dispatch({
+            type: "UPDATE_CHARACTER",
+            data: character
+        })
+    }
+    buildDefaultCharObj(){
+        if(this.charObj){
+            let prueba = {type : 1, zIndex : this.charObj.character.heads[0][1].zIndex}
+            // console.log(prueba)
+            return {
+                body : {type : 1, zIndex : this.charObj.character.bodies[0][1].zIndex},
+                skin : "caucasian",
+                head: {type : 1, zIndex : this.charObj.character.heads[0][1].zIndex},
+                hair: {type : 1, zIndex : this.charObj.character.heads[0][1].hairs[0][1].zIndex},
+                hairColor: "black",
+                eyebrows: {type : 1, zIndex : this.charObj.character.eyebrows[0][1].zIndex},
+                eyebrowsColor: "black",
+                eyes: {type : 1, zIndex : this.charObj.character.eyes[0][1].zIndex},
+                nose: {type : 1, zIndex : this.charObj.character.noses[0][1].zIndex},
+                ears: {type : 1, zIndex : this.charObj.character.ears[0][1].zIndex},
+                mouth: {type : 1, zIndex : this.charObj.character.mouths[0][1].zIndex},
+                facial: {type : 1, zIndex : this.charObj.character.heads[0][1].facials[0][1].zIndex},
+                clothes: {type : 1, zIndex : this.charObj.character.bodies[0][1].clothes[0][1].zIndex},
+                complements: {type : 1, zIndex : this.charObj.character.complements[0][1].zIndex}
+            }
+        }
     }
     render() {
         console.log("PROPS en render")
@@ -295,7 +315,9 @@ class OptionContainer extends Component {
 
                     <button onClick={this.saveCharacter}>Guardar</button>
                 </div>
-                {this.character ? <Canvas character={this.props.character ? this.props.character : this.character.default} /> : ""}
+                {this.character ? 
+                <Canvas character={this.props.character ? this.props.character : this.character.default} /> 
+                : ""}
             </div>
         );
     }
