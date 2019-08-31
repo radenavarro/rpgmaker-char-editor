@@ -83,20 +83,20 @@ class Canvas extends Component {
         // console.log(styles.head);
         return (
             <div id={"canvas"}>
-                <div id={"head"} style={styles.head}></div>
-                <div id={"body"} style={styles.body}></div>
-                <div id={"bodySkin"} style={styles.bodySkin}></div>
-                <div id={"hair"} style={styles.hair}></div>
-                <div id={"hairColor"} style={styles.hairColor}></div>
-                <div id={"eyes"} style={styles.eyes}></div>
-                <div id={"eyeColor"} style={styles.eyeColor}></div>
-                <div id={"eyebrows"} style={styles.eyebrows}></div>
-                <div id={"eyebrowsColor"} style={styles.eyebrowsColor}></div>
-                <div id={"nose"} style={styles.nose}></div>
-                <div id={"mouth"} style={styles.mouth}></div>
-                <div id={"ears"} style={styles.ears}></div>
-                <div id={"clothes"} style={styles.clothes}></div>
-                <div id={"complements"} style={styles.complements}></div>
+                <div id={"head"} style={styles.head}/>
+                <div id={"body"} style={styles.body}/>
+                <div id={"bodySkin"} style={styles.bodySkin}/>
+                <div id={"hair"} style={styles.hair}/>
+                <div id={"hairColor"} style={styles.hairColor}/>
+                <div id={"eyes"} style={styles.eyes}/>
+                <div id={"eyeColor"} style={styles.eyeColor}/>
+                <div id={"eyebrows"} style={styles.eyebrows}/>
+                <div id={"eyebrowsColor"} style={styles.eyebrowsColor}/>
+                <div id={"nose"} style={styles.nose}/>
+                <div id={"mouth"} style={styles.mouth}/>
+                <div id={"ears"} style={styles.ears}/>
+                <div id={"clothes"} style={styles.clothes}/>
+                <div id={"complements"} style={styles.complements}/>
             </div>
             // <canvas ref="canvas" width={145} height={145}/>
         );

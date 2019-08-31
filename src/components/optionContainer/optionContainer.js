@@ -22,7 +22,7 @@ class OptionContainer extends Component {
             this.character = this.buildDefaultCharObj();
 
             this.props.dispatch({
-                type: "LOAD_DEFAULT_CHARACTER",
+                type: "UPDATE_CHARACTER",
                 data: Object.assign({}, this.character)
     
             })
@@ -52,46 +52,94 @@ class OptionContainer extends Component {
                 character.skin.type++;
                 break;
             case 'head':
-                await fetch(this.imageUrl + "head" + character.head.type + this.imgExtension, { method: 'HEAD' })
-                .then(res => {
-                    console.log(res)
-                    if (res.ok) {
+                // await fetch(this.imageUrl + "head" + character.head.type + this.imgExtension, { method: 'HEAD' })
+                // .then(res => {
+                //     console.log(res)
+                //     if (res.ok) {
+                //         character.head.type++;
+                //     } else {
+                //         character.head.type = 1;
+                //     }
+                // }).catch(err => console.log('Error:', err));
+                if(this.charObj){
+                    console.log(Object.keys(this.charObj.character.heads[0]).length)
+                    if(character.head.type <= Object.keys(this.charObj.character.heads[0]).length) {
                         character.head.type++;
-                    } else {
+                    }
+                    else{
                         character.head.type = 1;
                     }
-                }).catch(err => console.log('Error:', err));
+                    console.log("TYPE: " + character.head.type)
+                }
                 break;
             case 'hair':
                 if(this.charObj){
                     // Valida array hairs fuera de límite, para cada head
                     if(character.hair.type <= Object.keys(this.charObj.character.heads[0][1].hairs[0]).length) {
                         character.hair.type++;
-                        console.log("EN VENTANA " + character.hair.type);}
-                    else{character.hair.type = 1;
-                        console.log("LOOPBACK" + character.hair.type)}
+                        // console.log("EN VENTANA " + character.hair.type);
+                    }
+                    else{
+                        character.hair.type = 1;
+                        // console.log("LOOPBACK" + character.hair.type)
+                    }
                 }
                 break;
             case 'hairColor':
                 character.hairColor.type++;
                 break;
             case 'eyebrows':
-                character.eyebrows.type++;
+                if(this.charObj){
+                    if(character.eyebrows.type <= Object.keys(this.charObj.character.eyebrows[0]).length) {
+                        character.eyebrows.type++;
+                    }
+                    else{
+                        character.eyebrows.type = 1;
+                    }
+                }
                 break;
             case 'eyebrowsColor':
                 character.eyebrowsColor.type++;
                 break;
             case 'eyes':
-                character.eyes.type++;
+                if(this.charObj){
+                    if(character.eyes.type <= Object.keys(this.charObj.character.eyes[0]).length) {
+                        character.eyes.type++;
+                    }
+                    else{
+                        character.eyes.type = 1;
+                    }
+                }
                 break;
             case 'nose':
-                character.nose.type++;
+                if(this.charObj){
+                    if(character.nose.type <= Object.keys(this.charObj.character.noses[0]).length) {
+                        character.nose.type++;
+                    }
+                    else{
+                        character.nose.type = 1;
+                    }
+                }
                 break;
             case 'ears':
-                character.ears.type++;
+                if(this.charObj){
+                    if(character.ears.type <= Object.keys(this.charObj.character.ears[0]).length) {
+                        character.ears.type++;
+                    }
+                    else{
+                        character.ears.type = 1;
+                    }
+                }
                 break;
             case 'mouth':
-                character.mouth.type++;
+                if(this.charObj){
+                    if(character.mouth.type <= Object.keys(this.charObj.character.mouths[0]).length) {
+                        character.mouth.type++;
+                    }
+                    else{
+                        character.mouth.type = 1;
+                    }
+                }
                 break;
             case 'facial':
                 character.facial.type++;
@@ -114,24 +162,38 @@ class OptionContainer extends Component {
         // console.log(charObj);
         switch (option) {
             case 'body':
-                character.body.type--;
+                if(this.charObj){
+                    if(character.body.type > 1) {
+                        character.body.type--;
+                    }
+                    else{
+                        character.body.type = ((Object.keys(this.charObj.character.bodies[0]).length)+1)
+                    }
+                }
                 break;
             case 'skin':
                 character.skin.type--;
                 break;
             case 'head':
-                character.head.type--;
+                if(this.charObj){
+                    if(character.head.type > 1) {
+                        character.head.type--;
+                    }
+                    else{
+                        character.head.type = ((Object.keys(this.charObj.character.heads[0]).length)+1)
+                    }
+                }
                 break;
             case 'hair':
                 if(this.charObj){
                     // Valida array hairs fuera de límite, para cada head
                     if(character.hair.type > 1) {
-                        console.log("EN VENTANA " + character.hair.type);
+                        // console.log("EN VENTANA " + character.hair.type);
                         character.hair.type--;
                     }
                     else{
                         character.hair.type = ((Object.keys(this.charObj.character.heads[0][1].hairs[0]).length)+1)
-                        console.log("LOOPBACK" + character.hair.type)
+                        // console.log("LOOPBACK" + character.hair.type)
                     }
                 }
                 break;
@@ -145,13 +207,34 @@ class OptionContainer extends Component {
                 character.eyebrowsColor.type--;
                 break;
             case 'eyes':
-                character.eyes.type--;
+                if(this.charObj){
+                    if(character.eyes.type > 1) {
+                        character.eyes.type--;
+                    }
+                    else{
+                        character.eyes.type = ((Object.keys(this.charObj.character.eyes[0]).length)+1)
+                    }
+                }
                 break;
             case 'nose':
-                character.nose.type--;
+                if(this.charObj){
+                    if(character.nose.type > 1) {
+                        character.nose.type--;
+                    }
+                    else{
+                        character.nose.type = ((Object.keys(this.charObj.character.noses[0]).length)+1)
+                    }
+                }
                 break;
             case 'ears':
-                character.ears.type--;
+                if(this.charObj){
+                    if(character.ears.type > 1) {
+                        character.ears.type--;
+                    }
+                    else{
+                        character.ears.type = ((Object.keys(this.charObj.character.ears[0]).length)+1)
+                    }
+                }
                 break;
             case 'mouth':
                 character.mouth.type--;
